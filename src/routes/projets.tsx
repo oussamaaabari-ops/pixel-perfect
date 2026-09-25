@@ -196,7 +196,7 @@ function Projets() {
                 <Stat label="Production annuelle cumulée" value={`${num(totals.kwh)} kWh/an`} />
                 <Stat
                   label="CAPEX cumulé (devises non converties)"
-                  value={money(totals.capex, projects[0].info.currency)}
+                  value={money(totals.capex, projects[0]!.info.currency)}
                 />
               </>
             );

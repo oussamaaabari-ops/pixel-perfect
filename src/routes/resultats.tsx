@@ -74,11 +74,11 @@ function Resultats() {
   const cur = project.info.currency;
   const monthly = MONTHS_FR.map((m, i) => ({
     mois: m,
-    Production: Math.round(study.energy.monthlyProductionKwh[i]),
-    Consommation: Math.round(study.consumption.monthlyKwh[i]),
-    Autoconsommation: Math.round(study.self.monthlySelfConsumedKwh[i]),
-    Soutirage: Math.round(study.self.monthlyImportKwh[i]),
-    Injection: Math.round(study.self.monthlyExportKwh[i]),
+    Production: Math.round(study.energy.monthlyProductionKwh[i] ?? 0),
+    Consommation: Math.round(study.consumption.monthlyKwh[i] ?? 0),
+    Autoconsommation: Math.round(study.self.monthlySelfConsumedKwh[i] ?? 0),
+    Soutirage: Math.round(study.self.monthlyImportKwh[i] ?? 0),
+    Injection: Math.round(study.self.monthlyExportKwh[i] ?? 0),
   }));
 
   const capexParts = [
@@ -164,7 +164,7 @@ function Resultats() {
         <Kpi
           label="Temps de retour"
           value={study.finance.simplePaybackYears ? num(study.finance.simplePaybackYears, 1) : "—"}
-          unit={study.finance.simplePaybackYears ? "ans" : undefined}
+          {...(study.finance.simplePaybackYears ? { unit: "ans" } : {})}
         />
       </div>
 

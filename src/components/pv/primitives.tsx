@@ -9,7 +9,7 @@ export function Section({
   children,
 }: {
   title: string;
-  description?: string;
+  description?: string | undefined;
   aside?: ReactNode;
   children: ReactNode;
 }) {
@@ -37,8 +37,8 @@ export function Kpi({
 }: {
   label: string;
   value: string;
-  unit?: string;
-  note?: string;
+  unit?: string | undefined;
+  note?: string | undefined;
 }) {
   return (
     <div className="rounded-md border border-border bg-card p-4">

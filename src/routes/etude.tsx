@@ -245,7 +245,7 @@ function Etude() {
                         key={m}
                         label={m}
                         unit="kWh"
-                        value={project.consumption.monthlyKwh[i]}
+                        value={project.consumption.monthlyKwh[i] ?? 0}
                         min={0}
                         onChange={(v) => {
                           const monthly = [...project.consumption.monthlyKwh];
@@ -598,7 +598,7 @@ function Etude() {
                   <Kpi
                     label="Ratio de performance"
                     value={study.energy.performanceRatio ? num(study.energy.performanceRatio, 2) : "—"}
-                    note={study.energy.performanceRatio ? undefined : "Nécessite H_POA"}
+                    {...(study.energy.performanceRatio ? {} : { note: "Nécessite H_POA" })}
                   />
                 </div>
               </Section>
@@ -705,7 +705,7 @@ function Etude() {
                   <Kpi
                     label="Temps de retour simple"
                     value={study.finance.simplePaybackYears ? num(study.finance.simplePaybackYears, 1) : "—"}
-                    unit={study.finance.simplePaybackYears ? "ans" : undefined}
+                    {...(study.finance.simplePaybackYears ? { unit: "ans" } : {})}
                   />
                   <Kpi label="CO₂ évité" value={num(study.environment.annualCo2AvoidedKg)} unit="kgCO₂/an" />
                 </div>

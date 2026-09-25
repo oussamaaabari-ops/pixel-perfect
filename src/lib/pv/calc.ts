@@ -289,7 +289,7 @@ export function computeSelfConsumption(
     let surplus = prod - direct;
     const residual = load - direct;
 
-    const batteryCapMonth = usableBatteryKwh * DAYS_IN_MONTH[i] * roundTrip;
+    const batteryCapMonth = usableBatteryKwh * (DAYS_IN_MONTH[i] ?? 30) * roundTrip;
     const stored = Math.min(surplus, residual, batteryCapMonth);
 
     surplus -= stored;
@@ -304,7 +304,7 @@ export function computeSelfConsumption(
   const production = sum(energy.monthlyProductionKwh);
 
   return {
-    monthlySelfConsumedKwh: selfDirect.map((d, i) => d + battery[i]),
+    monthlySelfConsumedKwh: selfDirect.map((d, i) => d + (battery[i] ?? 0)),
     monthlyImportKwh: imports,
     monthlyExportKwh: exports,
     monthlyBatteryKwh: battery,

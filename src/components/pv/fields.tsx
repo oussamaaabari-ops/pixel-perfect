@@ -20,9 +20,9 @@ export function FieldShell({
   children,
 }: {
   label: string;
-  unit?: string;
-  hint?: string;
-  error?: string | null;
+  unit?: string | undefined;
+  hint?: string | undefined;
+  error?: string | null | undefined;
   children: ReactNode;
 }) {
   return (
@@ -52,12 +52,12 @@ export function NumberField({
   step = "any",
 }: {
   label: string;
-  unit?: string;
-  hint?: string;
+  unit?: string | undefined;
+  hint?: string | undefined;
   value: number;
   onChange: (v: number) => void;
-  min?: number;
-  max?: number;
+  min?: number | undefined;
+  max?: number | undefined;
   step?: number | "any";
 }) {
   const error =
@@ -92,10 +92,10 @@ export function TextField({
   placeholder,
 }: {
   label: string;
-  hint?: string;
+  hint?: string | undefined;
   value: string;
   onChange: (v: string) => void;
-  placeholder?: string;
+  placeholder?: string | undefined;
 }) {
   return (
     <FieldShell label={label} hint={hint}>
@@ -118,7 +118,7 @@ export function SelectField<T extends string>({
   onChange,
 }: {
   label: string;
-  hint?: string;
+  hint?: string | undefined;
   value: T;
   options: { value: T; label: string }[];
   onChange: (v: T) => void;

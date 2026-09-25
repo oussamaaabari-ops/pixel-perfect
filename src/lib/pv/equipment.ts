@@ -242,7 +242,7 @@ export const DEMO_STRUCTURES: MountingStructure[] = [
 ];
 
 export const getModule = (id: string): PvModule =>
-  DEMO_MODULES.find((m) => m.id === id) ?? DEMO_MODULES[0];
+  DEMO_MODULES.find((m) => m.id === id) ?? DEMO_MODULES[0]!;
 
 export const getInverter = (id: string): Inverter =>
-  DEMO_INVERTERS.find((i) => i.id === id) ?? DEMO_INVERTERS[0];
+  DEMO_INVERTERS.find((i) => i.id === id) ?? DEMO_INVERTERS[0]!;
