@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EquipementsRouteImport } from './routes/equipements'
+import { Route as EtudeRouteImport } from './routes/etude'
 import { Route as MethodologieRouteImport } from './routes/methodologie'
 import { Route as ProjetsRouteImport } from './routes/projets'
 
@@ -36,6 +37,11 @@ const EquipementsRoute = EquipementsRouteImport.update({
   path: '/equipements',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EtudeRoute = EtudeRouteImport.update({
+  id: '/etude',
+  path: '/etude',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MethodologieRoute = MethodologieRouteImport.update({
   id: '/methodologie',
   path: '/methodologie',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
   '/equipements': typeof EquipementsRoute
+  '/etude': typeof EtudeRoute
   '/methodologie': typeof MethodologieRoute
   '/projets': typeof ProjetsRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
   '/equipements': typeof EquipementsRoute
+  '/etude': typeof EtudeRoute
   '/methodologie': typeof MethodologieRoute
   '/projets': typeof ProjetsRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
   '/equipements': typeof EquipementsRoute
+  '/etude': typeof EtudeRoute
   '/methodologie': typeof MethodologieRoute
   '/projets': typeof ProjetsRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/a-propos'
     | '/contact'
     | '/equipements'
+    | '/etude'
     | '/methodologie'
     | '/projets'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/a-propos'
     | '/contact'
     | '/equipements'
+    | '/etude'
     | '/methodologie'
     | '/projets'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/a-propos'
     | '/contact'
     | '/equipements'
+    | '/etude'
     | '/methodologie'
     | '/projets'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   AProposRoute: typeof AProposRoute
   ContactRoute: typeof ContactRoute
   EquipementsRoute: typeof EquipementsRoute
+  EtudeRoute: typeof EtudeRoute
   MethodologieRoute: typeof MethodologieRoute
   ProjetsRoute: typeof ProjetsRoute
 }
@@ -138,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EquipementsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/etude': {
+      id: '/etude'
+      path: '/etude'
+      fullPath: '/etude'
+      preLoaderRoute: typeof EtudeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/methodologie': {
       id: '/methodologie'
       path: '/methodologie'
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AProposRoute: AProposRoute,
   ContactRoute: ContactRoute,
   EquipementsRoute: EquipementsRoute,
+  EtudeRoute: EtudeRoute,
   MethodologieRoute: MethodologieRoute,
   ProjetsRoute: ProjetsRoute,
 }
