@@ -10,33 +10,141 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AProposRouteImport } from './routes/a-propos'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EquipementsRouteImport } from './routes/equipements'
+import { Route as EtudeRouteImport } from './routes/etude'
+import { Route as MethodologieRouteImport } from './routes/methodologie'
+import { Route as ProjetsRouteImport } from './routes/projets'
+import { Route as RapportRouteImport } from './routes/rapport'
+import { Route as ResultatsRouteImport } from './routes/resultats'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AProposRoute = AProposRouteImport.update({
+  id: '/a-propos',
+  path: '/a-propos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EquipementsRoute = EquipementsRouteImport.update({
+  id: '/equipements',
+  path: '/equipements',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EtudeRoute = EtudeRouteImport.update({
+  id: '/etude',
+  path: '/etude',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MethodologieRoute = MethodologieRouteImport.update({
+  id: '/methodologie',
+  path: '/methodologie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetsRoute = ProjetsRouteImport.update({
+  id: '/projets',
+  path: '/projets',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RapportRoute = RapportRouteImport.update({
+  id: '/rapport',
+  path: '/rapport',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultatsRoute = ResultatsRouteImport.update({
+  id: '/resultats',
+  path: '/resultats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
+  '/contact': typeof ContactRoute
+  '/equipements': typeof EquipementsRoute
+  '/etude': typeof EtudeRoute
+  '/methodologie': typeof MethodologieRoute
+  '/projets': typeof ProjetsRoute
+  '/rapport': typeof RapportRoute
+  '/resultats': typeof ResultatsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
+  '/contact': typeof ContactRoute
+  '/equipements': typeof EquipementsRoute
+  '/etude': typeof EtudeRoute
+  '/methodologie': typeof MethodologieRoute
+  '/projets': typeof ProjetsRoute
+  '/rapport': typeof RapportRoute
+  '/resultats': typeof ResultatsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/a-propos': typeof AProposRoute
+  '/contact': typeof ContactRoute
+  '/equipements': typeof EquipementsRoute
+  '/etude': typeof EtudeRoute
+  '/methodologie': typeof MethodologieRoute
+  '/projets': typeof ProjetsRoute
+  '/rapport': typeof RapportRoute
+  '/resultats': typeof ResultatsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/a-propos'
+    | '/contact'
+    | '/equipements'
+    | '/etude'
+    | '/methodologie'
+    | '/projets'
+    | '/rapport'
+    | '/resultats'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/a-propos'
+    | '/contact'
+    | '/equipements'
+    | '/etude'
+    | '/methodologie'
+    | '/projets'
+    | '/rapport'
+    | '/resultats'
+  id:
+    | '__root__'
+    | '/'
+    | '/a-propos'
+    | '/contact'
+    | '/equipements'
+    | '/etude'
+    | '/methodologie'
+    | '/projets'
+    | '/rapport'
+    | '/resultats'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AProposRoute: typeof AProposRoute
+  ContactRoute: typeof ContactRoute
+  EquipementsRoute: typeof EquipementsRoute
+  EtudeRoute: typeof EtudeRoute
+  MethodologieRoute: typeof MethodologieRoute
+  ProjetsRoute: typeof ProjetsRoute
+  RapportRoute: typeof RapportRoute
+  ResultatsRoute: typeof ResultatsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +156,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/a-propos': {
+      id: '/a-propos'
+      path: '/a-propos'
+      fullPath: '/a-propos'
+      preLoaderRoute: typeof AProposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/equipements': {
+      id: '/equipements'
+      path: '/equipements'
+      fullPath: '/equipements'
+      preLoaderRoute: typeof EquipementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/etude': {
+      id: '/etude'
+      path: '/etude'
+      fullPath: '/etude'
+      preLoaderRoute: typeof EtudeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/methodologie': {
+      id: '/methodologie'
+      path: '/methodologie'
+      fullPath: '/methodologie'
+      preLoaderRoute: typeof MethodologieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projets': {
+      id: '/projets'
+      path: '/projets'
+      fullPath: '/projets'
+      preLoaderRoute: typeof ProjetsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rapport': {
+      id: '/rapport'
+      path: '/rapport'
+      fullPath: '/rapport'
+      preLoaderRoute: typeof RapportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resultats': {
+      id: '/resultats'
+      path: '/resultats'
+      fullPath: '/resultats'
+      preLoaderRoute: typeof ResultatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AProposRoute: AProposRoute,
+  ContactRoute: ContactRoute,
+  EquipementsRoute: EquipementsRoute,
+  EtudeRoute: EtudeRoute,
+  MethodologieRoute: MethodologieRoute,
+  ProjetsRoute: ProjetsRoute,
+  RapportRoute: RapportRoute,
+  ResultatsRoute: ResultatsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
