@@ -190,6 +190,9 @@ export interface Project {
   battery: BatteryInput;
   economics: EconomicsInput;
   environment: EnvironmentInput;
+  site: SiteInput;
+  layout: LayoutInput;
+  cables: CableInput;
 }
 
 export type CheckStatus = "ok" | "warning" | "error";
@@ -201,4 +204,53 @@ export interface EngineeringCheck {
   detail: string;
   value?: string;
   limit?: string;
+}
+
+/* ------------------------------------------------------------------ */
+/* Site, calepinage, protections, câbles (v2)                          */
+/* ------------------------------------------------------------------ */
+
+export type LatLng = [number, number];
+
+/**
+ * Localisation et emprise du site. Les champs `imagery*`, `buildingFootprintId`
+ * et `elevationModel` sont réservés aux intégrations futures (imagerie
+ * satellite, détection de toiture, MNT, ombrages 3D).
+ */
+export interface SiteInput {
+  label: string;
+  altitudeM: number | null;
+  polygon: LatLng[]; // emprise d'implantation dessinée sur la carte
+  imagerySource?: string | undefined;
+  buildingFootprintId?: string | undefined;
+  elevationModel?: string | undefined;
+}
+
+export type ModuleOrientation = "portrait" | "paysage";
+export type LayoutMode = "max-modules" | "max-puissance" | "espacement-optimise";
+
+export interface LayoutInput {
+  orientation: ModuleOrientation;
+  mode: LayoutMode;
+  setbackM: number; // retrait en bordure
+  moduleGapM: number; // jeu entre modules d'une rangée
+  rowSpacingM: number; // allée libre entre rangées
+  corridorEveryRows: number; // 0 = aucune allée de maintenance
+  corridorWidthM: number;
+  /** Angle d'alignement des rangées (° depuis l'Est, sens trigonométrique). null = arête la plus longue. */
+  rowAngleDeg: number | null;
+}
+
+export type ConductorMaterial = "cuivre" | "aluminium";
+export type InstallMethod = "B1" | "C" | "E";
+
+export interface CableInput {
+  dcLengthM: number; // longueur aller chaîne → onduleur
+  acLengthM: number; // longueur onduleur → TGBT
+  material: ConductorMaterial;
+  method: InstallMethod;
+  ambientC: number;
+  groupedCircuits: number;
+  maxDropDcPct: number;
+  maxDropAcPct: number;
 }
