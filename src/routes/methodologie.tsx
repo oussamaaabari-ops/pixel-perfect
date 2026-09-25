@@ -84,7 +84,7 @@ I_MPPT = I_mp × N_chaînes_par_MPPT`}</Formula>
       </Section>
 
       <Section title="4. Production énergétique et ratio de performance">
-        <Formula>{`Y_r [h] = H_POA [kWh/m²/an] / 1000
+        <Formula>{`Y_r [h] = H_POA [kWh/m²/an] / G_STC [1 kW/m²]
 Facteur de pertes = Π (1 − perte_i)
 Rendement spécifique [kWh/kWc/an] = Y_r × Facteur de pertes
 E_PV [kWh/an] = P_PV [kWc] × Rendement spécifique

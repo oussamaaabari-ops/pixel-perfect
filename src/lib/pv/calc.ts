@@ -212,7 +212,8 @@ export function computeEnergy(project: Project, sizing: SizingResult): EnergyRes
   const lossFactor = factors.reduce((acc, p) => acc * (1 - clamp(safe(p), 0, 100) / 100), 1);
 
   const irr = project.irradiation;
-  const referenceYield = irr.poaKwhM2Year / 1000;
+  // Y_r [h] = H_POA [kWh/m²] / G_STC [1 kW/m²]
+  const referenceYield = irr.poaKwhM2Year;
 
   let specificYield: number;
   let pr: number | null;
