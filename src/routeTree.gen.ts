@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AProposRouteImport } from './routes/a-propos'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as EquipementsRouteImport } from './routes/equipements'
 import { Route as MethodologieRouteImport } from './routes/methodologie'
+import { Route as ProjetsRouteImport } from './routes/projets'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,9 +31,19 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EquipementsRoute = EquipementsRouteImport.update({
+  id: '/equipements',
+  path: '/equipements',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MethodologieRoute = MethodologieRouteImport.update({
   id: '/methodologie',
   path: '/methodologie',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetsRoute = ProjetsRouteImport.update({
+  id: '/projets',
+  path: '/projets',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -39,34 +51,61 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
+  '/equipements': typeof EquipementsRoute
   '/methodologie': typeof MethodologieRoute
+  '/projets': typeof ProjetsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
+  '/equipements': typeof EquipementsRoute
   '/methodologie': typeof MethodologieRoute
+  '/projets': typeof ProjetsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
   '/contact': typeof ContactRoute
+  '/equipements': typeof EquipementsRoute
   '/methodologie': typeof MethodologieRoute
+  '/projets': typeof ProjetsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/a-propos' | '/contact' | '/methodologie'
+  fullPaths:
+    | '/'
+    | '/a-propos'
+    | '/contact'
+    | '/equipements'
+    | '/methodologie'
+    | '/projets'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/a-propos' | '/contact' | '/methodologie'
-  id: '__root__' | '/' | '/a-propos' | '/contact' | '/methodologie'
+  to:
+    | '/'
+    | '/a-propos'
+    | '/contact'
+    | '/equipements'
+    | '/methodologie'
+    | '/projets'
+  id:
+    | '__root__'
+    | '/'
+    | '/a-propos'
+    | '/contact'
+    | '/equipements'
+    | '/methodologie'
+    | '/projets'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AProposRoute: typeof AProposRoute
   ContactRoute: typeof ContactRoute
+  EquipementsRoute: typeof EquipementsRoute
   MethodologieRoute: typeof MethodologieRoute
+  ProjetsRoute: typeof ProjetsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -92,11 +131,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/equipements': {
+      id: '/equipements'
+      path: '/equipements'
+      fullPath: '/equipements'
+      preLoaderRoute: typeof EquipementsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/methodologie': {
       id: '/methodologie'
       path: '/methodologie'
       fullPath: '/methodologie'
       preLoaderRoute: typeof MethodologieRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projets': {
+      id: '/projets'
+      path: '/projets'
+      fullPath: '/projets'
+      preLoaderRoute: typeof ProjetsRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -106,7 +159,9 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AProposRoute: AProposRoute,
   ContactRoute: ContactRoute,
+  EquipementsRoute: EquipementsRoute,
   MethodologieRoute: MethodologieRoute,
+  ProjetsRoute: ProjetsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
