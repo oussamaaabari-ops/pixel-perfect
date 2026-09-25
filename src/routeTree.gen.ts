@@ -16,6 +16,8 @@ import { Route as EquipementsRouteImport } from './routes/equipements'
 import { Route as EtudeRouteImport } from './routes/etude'
 import { Route as MethodologieRouteImport } from './routes/methodologie'
 import { Route as ProjetsRouteImport } from './routes/projets'
+import { Route as RapportRouteImport } from './routes/rapport'
+import { Route as ResultatsRouteImport } from './routes/resultats'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +54,16 @@ const ProjetsRoute = ProjetsRouteImport.update({
   path: '/projets',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RapportRoute = RapportRouteImport.update({
+  id: '/rapport',
+  path: '/rapport',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResultatsRoute = ResultatsRouteImport.update({
+  id: '/resultats',
+  path: '/resultats',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +73,8 @@ export interface FileRoutesByFullPath {
   '/etude': typeof EtudeRoute
   '/methodologie': typeof MethodologieRoute
   '/projets': typeof ProjetsRoute
+  '/rapport': typeof RapportRoute
+  '/resultats': typeof ResultatsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +84,8 @@ export interface FileRoutesByTo {
   '/etude': typeof EtudeRoute
   '/methodologie': typeof MethodologieRoute
   '/projets': typeof ProjetsRoute
+  '/rapport': typeof RapportRoute
+  '/resultats': typeof ResultatsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +96,8 @@ export interface FileRoutesById {
   '/etude': typeof EtudeRoute
   '/methodologie': typeof MethodologieRoute
   '/projets': typeof ProjetsRoute
+  '/rapport': typeof RapportRoute
+  '/resultats': typeof ResultatsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +109,8 @@ export interface FileRouteTypes {
     | '/etude'
     | '/methodologie'
     | '/projets'
+    | '/rapport'
+    | '/resultats'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +120,8 @@ export interface FileRouteTypes {
     | '/etude'
     | '/methodologie'
     | '/projets'
+    | '/rapport'
+    | '/resultats'
   id:
     | '__root__'
     | '/'
@@ -109,6 +131,8 @@ export interface FileRouteTypes {
     | '/etude'
     | '/methodologie'
     | '/projets'
+    | '/rapport'
+    | '/resultats'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +143,8 @@ export interface RootRouteChildren {
   EtudeRoute: typeof EtudeRoute
   MethodologieRoute: typeof MethodologieRoute
   ProjetsRoute: typeof ProjetsRoute
+  RapportRoute: typeof RapportRoute
+  ResultatsRoute: typeof ResultatsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +198,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjetsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rapport': {
+      id: '/rapport'
+      path: '/rapport'
+      fullPath: '/rapport'
+      preLoaderRoute: typeof RapportRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resultats': {
+      id: '/resultats'
+      path: '/resultats'
+      fullPath: '/resultats'
+      preLoaderRoute: typeof ResultatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +223,8 @@ const rootRouteChildren: RootRouteChildren = {
   EtudeRoute: EtudeRoute,
   MethodologieRoute: MethodologieRoute,
   ProjetsRoute: ProjetsRoute,
+  RapportRoute: RapportRoute,
+  ResultatsRoute: ResultatsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
