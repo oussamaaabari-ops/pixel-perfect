@@ -6,11 +6,12 @@ import { Logo } from "./Logo";
 const NAV = [
   { to: "/", label: "Accueil" },
   { to: "/etude", label: "Pré-dimensionnement" },
+  { to: "/calepinage", label: "Calepinage" },
+  { to: "/unifilaire", label: "Unifilaire" },
   { to: "/resultats", label: "Résultats" },
   { to: "/projets", label: "Projets" },
   { to: "/equipements", label: "Équipements" },
   { to: "/methodologie", label: "Méthodologie" },
-  { to: "/a-propos", label: "À propos" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
@@ -30,7 +31,7 @@ export function Header() {
               key={item.to}
               to={item.to}
               activeOptions={{ exact: item.to === "/" }}
-              activeProps={{ className: "text-foreground bg-secondary" }}
+              activeProps={{ className: "text-primary bg-secondary" }}
               className="rounded-sm px-3 py-1.5 text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
             >
               {item.label}
@@ -41,7 +42,7 @@ export function Header() {
         <div className="flex items-center gap-2">
           <Link
             to="/etude"
-            className="hidden rounded-sm bg-accent px-4 py-2 text-[13px] font-semibold text-accent-foreground transition-opacity hover:opacity-90 sm:inline-flex"
+            className="hidden rounded-sm bg-primary px-4 py-2 text-[13px] font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:inline-flex"
           >
             Démarrer une étude
           </Link>

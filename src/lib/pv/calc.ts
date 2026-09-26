@@ -7,6 +7,15 @@
  */
 
 import { getInverter, getModule } from "./equipment";
+import {
+  computeCables,
+  computeProtections,
+  electricalContext,
+  type CableResult,
+  type ElectricalContext,
+  type ProtectionItem,
+} from "./electrical";
+import { computeLayout, type LayoutResult } from "./layout";
 import type {
   EngineeringCheck,
   Inverter,
@@ -620,6 +629,10 @@ export interface StudyResult {
   finance: FinanceResult;
   environment: EnvironmentResult;
   checks: EngineeringCheck[];
+  layout: LayoutResult;
+  electrical: ElectricalContext;
+  protections: ProtectionItem[];
+  cables: CableResult[];
 }
 
 export function runStudy(project: Project): StudyResult {
@@ -635,6 +648,35 @@ export function runStudy(project: Project): StudyResult {
   const finance = computeFinance(project, self);
   const environment = computeEnvironment(project, energy);
   const checks = runChecks(project, module, inverter, sizing, strings, geometry, energy);
+  const layout = computeLayout(project, module);
+  const electrical = electricalContext(project, module, inverter, strings.vocMaxV);
+  const protections = computeProtections(electrical, project);
+  const cables = computeCables(electrical, project);
+
+  // Synchronisation calepinage ↔ configuration électrique
+  if (layout.moduleCount > 0) {
+    const ok = sizing.moduleCount <= layout.moduleCount;
+    checks.push({
+      id: "layout-capacity",
+      label: "Capacité du calepinage",
+      status: ok ? "ok" : "error",
+      value: `${sizing.moduleCount} modules`,
+      limit: `≤ ${layout.moduleCount} placés`,
+      detail: ok
+        ? `La configuration électrique (${sizing.moduleCount} modules) tient dans le calepinage automatique (${layout.moduleCount} emplacements).`
+        : `La configuration électrique demande ${sizing.moduleCount} modules alors que le calepinage n'en place que ${layout.moduleCount}. Réduire les chaînes ou agrandir l'emprise.`,
+    });
+  }
+  for (const c of cables) {
+    checks.push({
+      id: `cable-${c.id}`,
+      label: `Section ${c.label}`,
+      status: c.status,
+      value: c.sectionMm2 ? `${c.sectionMm2} mm² · ΔU ${c.voltageDropPct.toFixed(2)} %` : "—",
+      limit: `ΔU ≤ ${c.maxDropPct} %`,
+      detail: c.note || "Section standard satisfaisant le courant admissible et la chute de tension.",
+    });
+  }
 
   return {
     module,
@@ -649,5 +691,9 @@ export function runStudy(project: Project): StudyResult {
     finance,
     environment,
     checks,
+    layout,
+    electrical,
+    protections,
+    cables,
   };
 }
