@@ -6,7 +6,39 @@
  */
 
 import { useCallback, useEffect, useState } from "react";
-import type { Project } from "./types";
+import type { CableInput, LayoutInput, Project, SiteInput } from "./types";
+
+export const DEFAULT_SITE: SiteInput = { label: "Casablanca, Maroc", altitudeM: null, polygon: [] };
+export const DEFAULT_LAYOUT: LayoutInput = {
+  orientation: "portrait",
+  mode: "max-modules",
+  setbackM: 0.5,
+  moduleGapM: 0.02,
+  rowSpacingM: 0.8,
+  corridorEveryRows: 0,
+  corridorWidthM: 1,
+  rowAngleDeg: null,
+};
+export const DEFAULT_CABLES: CableInput = {
+  dcLengthM: 25,
+  acLengthM: 15,
+  material: "cuivre",
+  method: "C",
+  ambientC: 40,
+  groupedCircuits: 1,
+  maxDropDcPct: 1.5,
+  maxDropAcPct: 1.5,
+};
+
+/** Complète les projets enregistrés avant l'ajout des blocs site / calepinage / câbles. */
+function migrate(p: Project): Project {
+  return {
+    ...p,
+    site: { ...DEFAULT_SITE, ...(p.site ?? {}) },
+    layout: { ...DEFAULT_LAYOUT, ...(p.layout ?? {}) },
+    cables: { ...DEFAULT_CABLES, ...(p.cables ?? {}) },
+  };
+}
 
 const STORAGE_KEY = "solara.projects.v1";
 const ACTIVE_KEY = "solara.activeProject.v1";
@@ -104,6 +136,9 @@ export function createEmptyProject(partial?: Partial<Project>): Project {
       emissionFactorKgPerKwh: 0.7,
       source: "Facteur d'émission à renseigner selon le mix électrique national",
     },
+    site: { ...DEFAULT_SITE },
+    layout: { ...DEFAULT_LAYOUT },
+    cables: { ...DEFAULT_CABLES },
     ...partial,
   };
 }
@@ -148,7 +183,7 @@ function read(): Project[] {
       window.localStorage.setItem(STORAGE_KEY, JSON.stringify(seeded));
       return seeded;
     }
-    return JSON.parse(raw) as Project[];
+    return (JSON.parse(raw) as Project[]).map(migrate);
   } catch {
     return [];
   }
