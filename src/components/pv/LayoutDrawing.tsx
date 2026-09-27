@@ -3,7 +3,7 @@
  * cotes, flèche Nord. Zoom (molette) et déplacement (glisser).
  * Export SVG / PNG ; DXF prévu ultérieurement.
  */
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Download, RotateCcw, ZoomIn, ZoomOut } from "lucide-react";
 import type { LayoutResult } from "@/lib/pv/layout";
 import { bbox } from "@/lib/pv/geo";
@@ -39,6 +39,22 @@ export function LayoutDrawing({
     () => layout.polygon.map((p, i) => `${i ? "L" : "M"}${p.x},${-p.y}`).join(" ") + " Z",
     [layout.polygon],
   );
+
+  useEffect(() => {
+    const el = svgRef.current;
+    if (!el) return;
+    const onWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 100 : 1);
+      const f = Math.exp(dy * 0.0015);
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      setView((v) => ({ x: v.x + v.w * px * (1 - f), y: v.y + v.h * py * (1 - f), w: v.w * f, h: v.h * f }));
+    };
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
+  }, []);
 
   const zoom = (f: number) =>
     setView((v) => ({ x: v.x + (v.w * (1 - f)) / 2, y: v.y + (v.h * (1 - f)) / 2, w: v.w * f, h: v.h * f }));
@@ -94,7 +110,7 @@ export function LayoutDrawing({
         viewBox={`${view.x} ${view.y} ${view.w} ${view.h}`}
         style={{ height, width: "100%", touchAction: "none", cursor: drag.current ? "grabbing" : "grab" }}
         className="tech-grid-fine block"
-        onWheel={(e) => zoom(e.deltaY > 0 ? 1.1 : 0.9)}
+        preserveAspectRatio="xMidYMid meet"
         onPointerDown={(e) => {
           (e.target as Element).setPointerCapture?.(e.pointerId);
           drag.current = { x: e.clientX, y: e.clientY, v: view };
