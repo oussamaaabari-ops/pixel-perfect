@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AProposRouteImport } from './routes/a-propos'
+import { Route as CalepinageRouteImport } from './routes/calepinage'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as EquipementsRouteImport } from './routes/equipements'
 import { Route as EtudeRouteImport } from './routes/etude'
@@ -18,6 +19,7 @@ import { Route as MethodologieRouteImport } from './routes/methodologie'
 import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as RapportRouteImport } from './routes/rapport'
 import { Route as ResultatsRouteImport } from './routes/resultats'
+import { Route as UnifilaireRouteImport } from './routes/unifilaire'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -27,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const AProposRoute = AProposRouteImport.update({
   id: '/a-propos',
   path: '/a-propos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalepinageRoute = CalepinageRouteImport.update({
+  id: '/calepinage',
+  path: '/calepinage',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -64,10 +71,16 @@ const ResultatsRoute = ResultatsRouteImport.update({
   path: '/resultats',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UnifilaireRoute = UnifilaireRouteImport.update({
+  id: '/unifilaire',
+  path: '/unifilaire',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
+  '/calepinage': typeof CalepinageRoute
   '/contact': typeof ContactRoute
   '/equipements': typeof EquipementsRoute
   '/etude': typeof EtudeRoute
@@ -75,10 +88,12 @@ export interface FileRoutesByFullPath {
   '/projets': typeof ProjetsRoute
   '/rapport': typeof RapportRoute
   '/resultats': typeof ResultatsRoute
+  '/unifilaire': typeof UnifilaireRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
+  '/calepinage': typeof CalepinageRoute
   '/contact': typeof ContactRoute
   '/equipements': typeof EquipementsRoute
   '/etude': typeof EtudeRoute
@@ -86,11 +101,13 @@ export interface FileRoutesByTo {
   '/projets': typeof ProjetsRoute
   '/rapport': typeof RapportRoute
   '/resultats': typeof ResultatsRoute
+  '/unifilaire': typeof UnifilaireRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/a-propos': typeof AProposRoute
+  '/calepinage': typeof CalepinageRoute
   '/contact': typeof ContactRoute
   '/equipements': typeof EquipementsRoute
   '/etude': typeof EtudeRoute
@@ -98,12 +115,14 @@ export interface FileRoutesById {
   '/projets': typeof ProjetsRoute
   '/rapport': typeof RapportRoute
   '/resultats': typeof ResultatsRoute
+  '/unifilaire': typeof UnifilaireRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/a-propos'
+    | '/calepinage'
     | '/contact'
     | '/equipements'
     | '/etude'
@@ -111,10 +130,12 @@ export interface FileRouteTypes {
     | '/projets'
     | '/rapport'
     | '/resultats'
+    | '/unifilaire'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/a-propos'
+    | '/calepinage'
     | '/contact'
     | '/equipements'
     | '/etude'
@@ -122,10 +143,12 @@ export interface FileRouteTypes {
     | '/projets'
     | '/rapport'
     | '/resultats'
+    | '/unifilaire'
   id:
     | '__root__'
     | '/'
     | '/a-propos'
+    | '/calepinage'
     | '/contact'
     | '/equipements'
     | '/etude'
@@ -133,11 +156,13 @@ export interface FileRouteTypes {
     | '/projets'
     | '/rapport'
     | '/resultats'
+    | '/unifilaire'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AProposRoute: typeof AProposRoute
+  CalepinageRoute: typeof CalepinageRoute
   ContactRoute: typeof ContactRoute
   EquipementsRoute: typeof EquipementsRoute
   EtudeRoute: typeof EtudeRoute
@@ -145,6 +170,7 @@ export interface RootRouteChildren {
   ProjetsRoute: typeof ProjetsRoute
   RapportRoute: typeof RapportRoute
   ResultatsRoute: typeof ResultatsRoute
+  UnifilaireRoute: typeof UnifilaireRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -161,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/a-propos'
       fullPath: '/a-propos'
       preLoaderRoute: typeof AProposRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calepinage': {
+      id: '/calepinage'
+      path: '/calepinage'
+      fullPath: '/calepinage'
+      preLoaderRoute: typeof CalepinageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -212,12 +245,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ResultatsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/unifilaire': {
+      id: '/unifilaire'
+      path: '/unifilaire'
+      fullPath: '/unifilaire'
+      preLoaderRoute: typeof UnifilaireRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AProposRoute: AProposRoute,
+  CalepinageRoute: CalepinageRoute,
   ContactRoute: ContactRoute,
   EquipementsRoute: EquipementsRoute,
   EtudeRoute: EtudeRoute,
@@ -225,6 +266,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjetsRoute: ProjetsRoute,
   RapportRoute: RapportRoute,
   ResultatsRoute: ResultatsRoute,
+  UnifilaireRoute: UnifilaireRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
