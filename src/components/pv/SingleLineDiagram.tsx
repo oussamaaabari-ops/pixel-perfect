@@ -83,8 +83,8 @@ export function SingleLineDiagram({ project, study }: { project: Project; study:
   const width = Math.max(760, shownStrings * colW + 260);
   const cx = width / 2;
   const topY = 60;
-  const busY = 210;
-  const invY = 380;
+  const busY = 240;
+  const invY = 400;
   const height = hybrid ? 900 : 860;
 
   const stringXs = Array.from({ length: shownStrings }, (_, i) => cx - ((shownStrings - 1) * colW) / 2 + i * colW);
@@ -113,7 +113,7 @@ export function SingleLineDiagram({ project, study }: { project: Project; study:
           <T x={x} y={topY + 81} size={8.5}>Vmp {strings.vmpStcV.toFixed(0)} V</T>
           <T x={x} y={topY + 92} size={8.5}>Voc,max {strings.vocMaxV.toFixed(0)} V</T>
           <T x={x} y={topY + 103} size={8.5}>Imp {module.impA.toFixed(1)} A</T>
-          {fuseReq && <Fuse x={x} y={busY - 60} color={DC} />}
+          {fuseReq && <Fuse x={x} y={busY - 14} color={DC} />}
           <line x1={x} y1={busY - 50} x2={x} y2={busY} stroke={DC} strokeWidth={1.4} />
         </g>
       ))}
@@ -123,8 +123,8 @@ export function SingleLineDiagram({ project, study }: { project: Project; study:
       {totalStrings === 0 && <T x={cx} y={topY + 40} size={11} color="#B83232">Aucune chaîne configurée</T>}
 
       {/* Coffret DC */}
-      <rect x={Math.min(...stringXs, cx) - 50} y={busY - 75} width={Math.max(...stringXs, cx) - Math.min(...stringXs, cx) + 100} height={170} fill="none" stroke={DC} strokeDasharray="5 4" />
-      <T x={Math.min(...stringXs, cx) - 44} y={busY - 62} anchor="start" size={9} weight={700} color={DC}>COFFRET DC</T>
+      <rect x={Math.min(...stringXs, cx) - 50} y={busY - 30} width={Math.max(...stringXs, cx) - Math.min(...stringXs, cx) + 100} height={125} fill="none" stroke={DC} strokeDasharray="5 4" />
+      <T x={Math.min(...stringXs, cx) - 44} y={busY - 17} anchor="start" size={9} weight={700} color={DC}>COFFRET DC</T>
       <line x1={stringXs[0] ?? cx} y1={busY} x2={stringXs[stringXs.length - 1] ?? cx} y2={busY} stroke={DC} strokeWidth={2.2} />
       <T x={(stringXs[stringXs.length - 1] ?? cx) + 8} y={busY + 4} anchor="start" size={8.5} color={DC}>{mppts} MPPT · {Math.ceil(electrical.stringsPerMppt)} ch./MPPT</T>
       <line x1={cx} y1={busY} x2={cx} y2={invY - 40} stroke={DC} strokeWidth={1.6} />
@@ -132,7 +132,7 @@ export function SingleLineDiagram({ project, study }: { project: Project; study:
       <T x={cx + 16} y={busY + 34} anchor="start" size={8.5}>Sect. DC {prot("dc-isolator")?.rating}</T>
       <Spd x={cx} y={busY + 62} color={DC} />
       <T x={cx + 46} y={busY + 72} anchor="start" size={8.5}>Parafoudre DC · {prot("dc-spd")?.rating}</T>
-      {fuseReq && <T x={cx - 16} y={busY - 38} anchor="end" size={8.5}>gPV {prot("dc-fuse")?.rating}</T>}
+      {fuseReq && <T x={cx - 16} y={busY - 36} anchor="end" size={8.5}>gPV {prot("dc-fuse")?.rating}</T>}
       {dcCable && (
         <T x={cx - 12} y={invY - 56} anchor="end" size={8.5} color={DC}>
           DC {dcCable.sectionMm2 ?? "?"} mm² · {dcCable.lengthM} m · ΔU {dcCable.voltageDropPct.toFixed(2)} %

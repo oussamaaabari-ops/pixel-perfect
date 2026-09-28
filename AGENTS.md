@@ -14,3 +14,5 @@
 - Le moteur de calcul PV vit dans `src/lib/pv/` (types, calc, equipment, store, format) et reste pur, sans dépendance UI — pour pouvoir le tester et le réutiliser (API, export) indépendamment des pages.
 - Les projets sont persistés en localStorage via `src/lib/pv/store.ts` (MVP sans backend) ; toute future migration backend passe par ce seul module.
 - Rendement de référence : `Y_r [h] = H_POA [kWh/m²] / G_STC (1 kW/m²)` — ne pas diviser par 1000.
+- Calepinage (`layout.ts`), protections/câbles (`electrical.ts`) sont appelés dans `runStudy` : toute page lit le même modèle central, jamais de calculateur isolé — pour la synchronisation de conception.
+- Leaflet est importé dynamiquement dans `SiteMap` (chargé via `lazy` après montage) — la carte ne doit jamais être évaluée au rendu serveur.
