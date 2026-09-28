@@ -24,7 +24,7 @@ export function buildReviewDossier(project: Project, study: StudyResult) {
       rendementSpecifique: study.energy.specificYieldKwhKwp,
       pr: study.energy.performanceRatio,
     },
-    verifications: study.checks.map((c) => ({ id: c.id, statut: c.status, libelle: c.label, message: c.message })),
+    verifications: study.checks.map((c) => ({ id: c.id, statut: c.status, libelle: c.label, detail: c.detail, valeur: c.value, limite: c.limit })),
   };
 }
 
