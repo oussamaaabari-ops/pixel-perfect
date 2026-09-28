@@ -20,6 +20,7 @@ import { Route as ProjetsRouteImport } from './routes/projets'
 import { Route as RapportRouteImport } from './routes/rapport'
 import { Route as ResultatsRouteImport } from './routes/resultats'
 import { Route as UnifilaireRouteImport } from './routes/unifilaire'
+import { Route as ApiDesignReviewRouteImport } from './routes/api/design-review'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -76,6 +77,11 @@ const UnifilaireRoute = UnifilaireRouteImport.update({
   path: '/unifilaire',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiDesignReviewRoute = ApiDesignReviewRouteImport.update({
+  id: '/api/design-review',
+  path: '/api/design-review',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,6 +95,7 @@ export interface FileRoutesByFullPath {
   '/rapport': typeof RapportRoute
   '/resultats': typeof ResultatsRoute
   '/unifilaire': typeof UnifilaireRoute
+  '/api/design-review': typeof ApiDesignReviewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,6 +109,7 @@ export interface FileRoutesByTo {
   '/rapport': typeof RapportRoute
   '/resultats': typeof ResultatsRoute
   '/unifilaire': typeof UnifilaireRoute
+  '/api/design-review': typeof ApiDesignReviewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,6 +124,7 @@ export interface FileRoutesById {
   '/rapport': typeof RapportRoute
   '/resultats': typeof ResultatsRoute
   '/unifilaire': typeof UnifilaireRoute
+  '/api/design-review': typeof ApiDesignReviewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,6 +140,7 @@ export interface FileRouteTypes {
     | '/rapport'
     | '/resultats'
     | '/unifilaire'
+    | '/api/design-review'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,6 +154,7 @@ export interface FileRouteTypes {
     | '/rapport'
     | '/resultats'
     | '/unifilaire'
+    | '/api/design-review'
   id:
     | '__root__'
     | '/'
@@ -157,6 +168,7 @@ export interface FileRouteTypes {
     | '/rapport'
     | '/resultats'
     | '/unifilaire'
+    | '/api/design-review'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,6 +183,7 @@ export interface RootRouteChildren {
   RapportRoute: typeof RapportRoute
   ResultatsRoute: typeof ResultatsRoute
   UnifilaireRoute: typeof UnifilaireRoute
+  ApiDesignReviewRoute: typeof ApiDesignReviewRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UnifilaireRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/design-review': {
+      id: '/api/design-review'
+      path: '/api/design-review'
+      fullPath: '/api/design-review'
+      preLoaderRoute: typeof ApiDesignReviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -267,6 +287,7 @@ const rootRouteChildren: RootRouteChildren = {
   RapportRoute: RapportRoute,
   ResultatsRoute: ResultatsRoute,
   UnifilaireRoute: UnifilaireRoute,
+  ApiDesignReviewRoute: ApiDesignReviewRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
