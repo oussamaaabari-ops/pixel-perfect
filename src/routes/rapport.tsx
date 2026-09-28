@@ -5,6 +5,10 @@ import { runStudy } from "@/lib/pv/calc";
 import { BRAND, DISCLAIMER } from "@/lib/brand";
 import { MONTHS_FR, money, num, pct } from "@/lib/pv/format";
 import { useActiveProject } from "@/lib/pv/store";
+import { LayoutDrawing } from "@/components/pv/LayoutDrawing";
+import { SingleLineDiagram } from "@/components/pv/SingleLineDiagram";
+import { CableTable, ProtectionTable } from "@/components/pv/ElectricalTables";
+import { LAYOUT_DISCLAIMER } from "@/lib/pv/layout";
 
 export const Route = createFileRoute("/rapport")({
   head: () => ({
@@ -25,7 +29,7 @@ export const Route = createFileRoute("/rapport")({
   component: Rapport,
 });
 
-function Block({ n, title, children }: { n: number; title: string; children: React.ReactNode }) {
+function Block({ n, title, children }: { n: number | string; title: string; children: React.ReactNode }) {
   return (
     <section className="break-inside-avoid border-t border-border pt-6">
       <h2 className="font-display text-base font-semibold">
@@ -127,6 +131,19 @@ function Rapport() {
           />
         </Block>
 
+        <Block n="1.1" title="Localisation du site et emprise">
+          <Table
+            rows={[
+              ["Site", p.site.label || "—"],
+              ["Coordonnées", `${p.info.latitude.toFixed(5)}° / ${p.info.longitude.toFixed(5)}°`],
+              ["Altitude approximative", p.site.altitudeM !== null ? `${Math.round(p.site.altitudeM)} m` : "Non disponible"],
+              ["Emprise", p.site.polygon.length >= 3 ? `Polygone dessiné sur carte — ${num(study.layout.areaM2, 1)} m²` : `Rectangle ${p.area.roofLengthM} × ${p.area.roofWidthM} m`],
+              ["Dimensions approx.", `${num(study.layout.lengthM, 1)} × ${num(study.layout.widthM, 1)} m`],
+            ]}
+          />
+          <p className="mt-2 text-xs text-muted-foreground">Capture satellite : non intégrée au document (imagerie consultable dans la page Calepinage).</p>
+        </Block>
+
         <Block n={2} title="Hypothèses de conception">
           <Table
             rows={[
@@ -211,6 +228,23 @@ function Rapport() {
               ["Courant par MPPT", `${num(study.strings.currentPerMpptA, 1)} A`],
             ]}
           />
+        </Block>
+
+        <Block n="7.1" title="Calepinage automatique préliminaire">
+          <LayoutDrawing layout={study.layout} modulesPerString={p.selection.modulesPerString} stringCount={p.selection.stringCount} tiltDeg={p.area.tiltDeg} azimuthDeg={p.area.azimuthDeg} height={380} />
+          <p className="mt-2 text-xs text-muted-foreground">{LAYOUT_DISCLAIMER}</p>
+        </Block>
+
+        <Block n="7.2" title="Schéma unifilaire préliminaire">
+          <div className="border border-border"><SingleLineDiagram project={p} study={study} /></div>
+        </Block>
+
+        <Block n="7.3" title="Protections — sélection préliminaire">
+          <ProtectionTable items={study.protections} />
+        </Block>
+
+        <Block n="7.4" title="Dimensionnement préliminaire des câbles">
+          <CableTable cables={study.cables} />
         </Block>
 
         <Block n={8} title="Production énergétique estimée">
