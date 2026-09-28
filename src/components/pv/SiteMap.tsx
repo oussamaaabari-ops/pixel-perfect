@@ -37,7 +37,7 @@ async function reverse(lat: number, lng: number): Promise<string | null> {
     const r = await fetch(
       `https://nominatim.openstreetmap.org/reverse?format=jsonv2&zoom=14&accept-language=fr&lat=${lat}&lon=${lng}`,
     );
-    const j = (await r.json()) as { address?: Record<string, string>; display_name?: string };
+    const j = (await r.json()) as { address?: { city?: string; town?: string; village?: string; county?: string; country?: string }; display_name?: string };
     const a = j.address ?? {};
     const city = a.city || a.town || a.village || a.county || "";
     return [city, a.country].filter(Boolean).join(", ") || j.display_name || null;
