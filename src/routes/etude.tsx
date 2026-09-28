@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, Check, Wand2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { NumberField, SelectField, TextField } from "@/components/pv/fields";
+import { SitePanel } from "@/components/pv/SitePanel";
 import { CheckList, DataRow, DemoBadge, Kpi, Section } from "@/components/pv/primitives";
 import { runStudy, suggestModuleCount } from "@/lib/pv/calc";
 import { DEMO_BATTERIES, DEMO_INVERTERS, DEMO_MODULES } from "@/lib/pv/equipment";
@@ -156,7 +157,7 @@ function Etude() {
                 <NumberField
                   label="Latitude"
                   unit="°"
-                  hint="Saisie manuelle. La sélection par carte pourra être ajoutée ultérieurement."
+                  hint="Renseignée automatiquement depuis la carte ci-dessous, ou saisie manuelle."
                   value={project.info.latitude}
                   min={-90}
                   max={90}
@@ -201,6 +202,10 @@ function Etude() {
                   min={0}
                   onChange={(v) => set("info", { tariff: v })}
                 />
+              </div>
+              <div className="mt-6 border-t border-border pt-5">
+                <p className="label-technical mb-3">Localisation du site et emprise d'implantation</p>
+                <SitePanel project={project} update={update} layout={study.layout} height={360} />
               </div>
             </Section>
           )}

@@ -100,7 +100,7 @@ function Calepinage() {
   );
 }
 
-export function NoProject() {
+function NoProject() {
   return (
     <div className="mx-auto max-w-2xl px-5 py-24 text-center">
       <h1 className="text-2xl font-bold">Aucun projet actif</h1>
