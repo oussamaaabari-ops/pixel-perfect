@@ -8,6 +8,9 @@ import { useActiveProject } from "@/lib/pv/store";
 import { LayoutDrawing } from "@/components/pv/LayoutDrawing";
 import { SingleLineDiagram } from "@/components/pv/SingleLineDiagram";
 import { CableTable, ProtectionTable } from "@/components/pv/ElectricalTables";
+import { ReviewText } from "@/components/pv/DesignReview";
+import { loadReview } from "@/lib/pv/review";
+import { useEffect, useState } from "react";
 import { LAYOUT_DISCLAIMER } from "@/lib/pv/layout";
 
 export const Route = createFileRoute("/rapport")({
@@ -247,6 +250,10 @@ function Rapport() {
           <CableTable cables={study.cables} />
         </Block>
 
+        <Block n="7.5" title="Revue IA de la conception">
+          <AiReview id={p.id} />
+        </Block>
+
         <Block n={8} title="Production énergétique estimée">
           <Table
             rows={[
@@ -396,6 +403,18 @@ function Rapport() {
           Édité le {new Date().toLocaleDateString("fr-FR")}
         </footer>
       </article>
+    </div>
+  );
+}
+
+function AiReview({ id }: { id: string }) {
+  const [r, setR] = useState<ReturnType<typeof loadReview>>(null);
+  useEffect(() => setR(loadReview(id)), [id]);
+  if (!r) return <p className="text-[12px] text-muted-foreground">Aucune revue IA réalisée pour ce projet (lancer la revue depuis la page Résultats ou l'étape « Conception & revue »).</p>;
+  return (
+    <div>
+      <p className="mb-2 text-[11px] text-muted-foreground">Revue générée le {new Date(r.at).toLocaleString("fr-FR")} — indicative, à valider par un professionnel qualifié.</p>
+      <ReviewText text={r.text} />
     </div>
   );
 }

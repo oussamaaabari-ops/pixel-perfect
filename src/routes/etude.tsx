@@ -4,6 +4,10 @@ import { useMemo, useState } from "react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { NumberField, SelectField, TextField } from "@/components/pv/fields";
 import { SitePanel } from "@/components/pv/SitePanel";
+import { LayoutDrawing } from "@/components/pv/LayoutDrawing";
+import { SingleLineDiagram } from "@/components/pv/SingleLineDiagram";
+import { CableTable, ProtectionTable } from "@/components/pv/ElectricalTables";
+import { DesignReview } from "@/components/pv/DesignReview";
 import { CheckList, DataRow, DemoBadge, Kpi, Section } from "@/components/pv/primitives";
 import { runStudy, suggestModuleCount } from "@/lib/pv/calc";
 import { DEMO_BATTERIES, DEMO_INVERTERS, DEMO_MODULES } from "@/lib/pv/equipment";
@@ -45,6 +49,7 @@ const STEPS = [
   "Chaînes",
   "Production",
   "Stockage & économie",
+  "Conception & revue",
 ];
 
 function Etude() {
@@ -714,6 +719,27 @@ function Etude() {
                   />
                   <Kpi label="CO₂ évité" value={num(study.environment.annualCo2AvoidedKg)} unit="kgCO₂/an" />
                 </div>
+              </Section>
+            </>
+          )}
+
+          {step === 8 && (
+            <>
+              <Section title="9a. Site et emprise" description="Localisation, contour de la zone et synthèse géométrique.">
+                <SitePanel project={project} update={update} layout={study.layout} height={360} />
+              </Section>
+              <Section title="9b. Calepinage" description={`${num(study.layout.moduleCount)} modules placés · ${num(study.layout.dcPowerKwp, 2)} kWc géométriques · ${num(study.layout.rows)} rangées.`}>
+                <LayoutDrawing layout={study.layout} modulesPerString={project.selection.modulesPerString} stringCount={project.selection.stringCount} tiltDeg={project.area.tiltDeg} azimuthDeg={project.area.azimuthDeg} height={380} />
+              </Section>
+              <Section title="9c. Schéma unifilaire">
+                <div className="overflow-x-auto border border-border"><SingleLineDiagram project={project} study={study} /></div>
+              </Section>
+              <Section title="9d. Protections et câbles">
+                <ProtectionTable items={study.protections} />
+                <div className="mt-6"><CableTable cables={study.cables} /></div>
+              </Section>
+              <Section title="9e. Revue IA de la conception" description="Analyse du site, du calepinage, des chaînes, des protections et des câbles, avec corrections recommandées.">
+                <DesignReview project={project} study={study} />
               </Section>
             </>
           )}
