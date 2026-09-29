@@ -18,6 +18,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { CableTable, ProtectionTable } from "@/components/pv/ElectricalTables";
+import { DesignReview } from "@/components/pv/DesignReview";
 import { CheckList, DataRow, DemoBadge, Kpi, Section } from "@/components/pv/primitives";
 import { runStudy } from "@/lib/pv/calc";
 import { MONTHS_FR, money, num, pct } from "@/lib/pv/format";
@@ -311,6 +313,29 @@ function Resultats() {
           </div>
         </Section>
       </div>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <Section title="Calepinage" aside={<Link to="/calepinage" className="text-xs underline">Voir le plan</Link>}>
+          <DataRow label="Surface de la zone" value={`${num(study.layout.areaM2)} m²`} />
+          <DataRow label="Modules placés" value={num(study.layout.moduleCount)} />
+          <DataRow label="Puissance géométrique" value={`${num(study.layout.dcPowerKwp, 2)} kWc`} />
+          <DataRow label="Rangées × colonnes" value={`${study.layout.rows} × ${study.layout.columns}`} />
+          <DataRow label="Pas entre rangées" value={`${num(study.layout.rowPitchM, 2)} m`} />
+          <DataRow label="Surface occupée" value={`${num(study.layout.occupiedAreaM2)} m²`} />
+          <DataRow label="Hauteur solaire hiver" value={`${num(study.layout.winterSolarElevationDeg, 1)}°`} />
+        </Section>
+        <div className="lg:col-span-2"><Section title="Protections" aside={<Link to="/unifilaire" className="text-xs underline">Schéma unifilaire</Link>}>
+          <ProtectionTable items={study.protections} />
+        </Section></div>
+      </div>
+
+      <Section title="Câbles — dimensionnement préliminaire">
+        <CableTable cables={study.cables} />
+      </Section>
+
+      <Section title="Revue IA de la conception" description="Corrections recommandées par un modèle d'IA à partir du site, du calepinage et des choix électriques.">
+        <DesignReview project={project} study={study} />
+      </Section>
 
       <Section
         title="Vérifications d'ingénierie"
