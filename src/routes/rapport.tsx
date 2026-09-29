@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Printer } from "lucide-react";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { runStudy } from "@/lib/pv/calc";
 import { BRAND, DISCLAIMER } from "@/lib/brand";
 import { MONTHS_FR, money, num, pct } from "@/lib/pv/format";
@@ -10,7 +10,6 @@ import { SingleLineDiagram } from "@/components/pv/SingleLineDiagram";
 import { CableTable, ProtectionTable } from "@/components/pv/ElectricalTables";
 import { ReviewText } from "@/components/pv/DesignReview";
 import { loadReview } from "@/lib/pv/review";
-import { useEffect, useState } from "react";
 import { LAYOUT_DISCLAIMER } from "@/lib/pv/layout";
 
 export const Route = createFileRoute("/rapport")({

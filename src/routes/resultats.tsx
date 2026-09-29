@@ -324,9 +324,9 @@ function Resultats() {
           <DataRow label="Surface occupée" value={`${num(study.layout.occupiedAreaM2)} m²`} />
           <DataRow label="Hauteur solaire hiver" value={`${num(study.layout.winterSolarElevationDeg, 1)}°`} />
         </Section>
-        <Section title="Protections" aside={<Link to="/unifilaire" className="text-xs underline">Schéma unifilaire</Link>} className="lg:col-span-2">
+        <div className="lg:col-span-2"><Section title="Protections" aside={<Link to="/unifilaire" className="text-xs underline">Schéma unifilaire</Link>}>
           <ProtectionTable items={study.protections} />
-        </Section>
+        </Section></div>
       </div>
 
       <Section title="Câbles — dimensionnement préliminaire">
